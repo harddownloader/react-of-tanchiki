@@ -43,7 +43,7 @@ class OurTank extends Component {
           <p>OurTank</p>
         </div>
       </>
-      )
+    )
   }
 }
 

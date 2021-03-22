@@ -8,7 +8,9 @@ class Header extends Component {
   render() {
     return (
       <>
-        <p className="header">header</p>
+        <div className="header">
+          <p className="header">header</p>
+        </div>
       </>
     )
   }
