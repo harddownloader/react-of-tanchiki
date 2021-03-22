@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export class EnemyTank extends Component {
+class EnemyTank extends Component {
   constructor(props) {
     super(props)
   }
@@ -9,3 +9,5 @@ export class EnemyTank extends Component {
     return(<>EnemyTank</>)
   }
 }
+
+export default EnemyTank

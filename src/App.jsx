@@ -10,6 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import { withStyles } from '@material-ui/styles'
 import Header from '@/components/header'
+import OurTank from '@/components/ourTank/OurTank'
 
 const styles = theme => ({
 	root: {
@@ -28,6 +29,7 @@ class App extends Component {
         <CssBaseline />
         <Container maxWidth='lg' className={classes.root}>
           <Header />
+          <OurTank />
         </Container>
       </>
     )
@@ -39,4 +41,4 @@ App.propTypes = {
 };
 
 
-export default  withStyles(styles)(App)
+export default withStyles(styles)(App)

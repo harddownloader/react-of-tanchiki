@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export class Shooter extends Component {
+class Shooter extends Component {
   constructor(props) {
     super(props)
   }
@@ -9,3 +9,5 @@ export class Shooter extends Component {
     return(<>Shooter</>)
   }
 }
+
+export default Shooter

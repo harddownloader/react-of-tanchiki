@@ -3,6 +3,7 @@ export class Speed {
     super(speed);
     
     this.speed = speed
+    // 
     console.log(speed)
   }
-} 
+}
