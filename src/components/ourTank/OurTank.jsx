@@ -7,14 +7,17 @@ class OurTank extends Component {
       radius_of_destruction: 70,
       cannon_turning_radius: 360,
       armor_level: 4,
+      // координаты
       coordinates: {
         x: null,
         y: null
       },
+      // движение
       move: {
         move_status: true,
         speed: 'max'
       },
+      // пушки у танка
       weapon: [
         {
           name: 'gun',
@@ -32,7 +35,9 @@ class OurTank extends Component {
           },
           health: 1
         }
-      ]
+      ],
+      // список выпущенных снарядов
+      bullets: []
     }
   }
   

@@ -2,8 +2,8 @@ export class Speed {
   constructor({speed}) {
     super(speed);
     
-    this.speed = speed
-    // 
+    this.state = {}
+    
     console.log(speed)
   }
 }
