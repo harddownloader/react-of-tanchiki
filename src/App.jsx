@@ -9,7 +9,7 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import { withStyles } from '@material-ui/styles'
-import Header from '@/components/header'
+// import Header from '@/components/header'
 import Map1 from '@/screens/Map1'
 
 const styles = theme => ({
@@ -17,10 +17,7 @@ const styles = theme => ({
 		minHeight: '100vh',
 		position: 'relative',
 		width: '100vw',
-
-    //bullets
-    bullets: 40
-	},
+	}
 })
 
 class App extends Component {
@@ -33,7 +30,9 @@ class App extends Component {
         upArrow : 38,
         rightArrow : 39,
         downArrow : 40
-      }
+      },
+      //bullets
+      bullets: 40
     }
 
     // this.handlerRight = this.handlerRight.bind(this)
@@ -53,7 +52,9 @@ class App extends Component {
   // handlerDown = event => {}
 
   handlerSpace = event => {
-    this.setState({bullets: this.state.bullets--})
+    // console.log('handlerSpace')
+    const newBulletsCount = this.state.bullets - 1
+    this.setState({bullets: newBulletsCount})
   }
 
   // handlerEsc = event => {}
@@ -75,8 +76,11 @@ class App extends Component {
       <>
         <CssBaseline />
         <Container maxWidth='lg' className={classes.root}>
-          <Map1 newBulletCount={this.state.bullets} store={this.props.store}/>
-          <Header />
+          <Map1
+            newBulletCount={this.state.bullets}
+            store={this.props.store}
+          />
+          {/* <Header /> */}
         </Container>
       </>
     )
