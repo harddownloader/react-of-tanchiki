@@ -149,6 +149,22 @@ class Map1 extends Component {
               item.x += 1
             }
 
+            if (
+              item.x < 0 ||
+              item.y < 0 ||
+              item.x > this.state.heightMap ||
+              item.y > this.state.wightMap
+            ) {
+              // rm current bullet
+              for (let i=0; i<bullets.length; i++) {
+                if (bullets[i].id === item.id) {
+                  bullets.splice(i, 1)
+                  this.setState({ourBullets: bullets})
+                  break
+                }
+              }
+            }
+
             console.log('item', item)
 
             return item
