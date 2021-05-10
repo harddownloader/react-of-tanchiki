@@ -31,27 +31,98 @@ class App extends Component {
         rightArrow : 39,
         downArrow : 40
       },
-      //bullets
-      bullets: 40
+      // bullets
+      bullets: 40,
+      // our tank
+      direction: {
+        directionCurrent: 'up',
+        dicrectionLeftStatus: 'stop',
+        dicrectionRightStatus: 'stop',
+        dicrectionUpStatus: 'stop',
+        dicrectionDownStatus: 'stop'
+      },
+      
     }
 
-    // this.handlerRight = this.handlerRight.bind(this)
-    // this.handlerLeft = this.handlerLeft.bind(this)
-    // this.handlerUp = this.handlerUp.bind(this)
-    // this.handlerDown = this.handlerDown.bind(this)
-    this.handlerSpace = this.handlerSpace.bind(this)
+    // key downs
+    this.handlerKeyDownRight = this.handlerKeyDownRight.bind(this)
+    this.handlerKeyDownLeft = this.handlerKeyDownLeft.bind(this)
+    this.handlerKeyDownUp = this.handlerKeyDownUp.bind(this)
+    this.handlerKeyDownDown = this.handlerKeyDownDown.bind(this)
+    this.handlerKeyDownSpace = this.handlerKeyDownSpace.bind(this)
+    // key ups
+    this.handlerKeyUpRight = this.handlerKeyUpRight.bind(this)
+    this.handlerKeyUpLeft = this.handlerKeyUpLeft.bind(this)
+    this.handlerKeyUpUp = this.handlerKeyUpUp.bind(this)
+    this.handlerKeyUpDown = this.handlerKeyUpDown.bind(this)
     // this.handlerEsc = this.handlerEsc.bind(this)
   }
 
-  // handlerRight = event => {}
+  // key down
+  handlerKeyDownRight = event => {
+    let direction = this.state.direction
+    direction.directionCurrent = 'right'
+    direction.dicrectionRightStatus = 'active'
+    this.setState({direction: direction})
+  }
 
-  // handlerLeft = event => {}
+  handlerKeyDownLeft = event => {
+    let direction = this.state.direction
+    direction.directionCurrent = 'left'
+    direction.dicrectionRightStatus = 'active'
+    this.setState({direction: direction})
+  }
 
-  // handlerUp = event => {}
+  handlerKeyDownUp = event => {
+    let direction = this.state.direction
+    direction.directionCurrent = 'up'
+    direction.dicrectionRightStatus = 'active'
+    this.setState({direction: direction})
+  }
 
-  // handlerDown = event => {}
+  handlerKeyDownDown = event => {
+    let direction = this.state.direction
+    direction.directionCurrent = 'down'
+    direction.dicrectionRightStatus = 'active'
+    this.setState({direction: direction})
+  }
 
-  handlerSpace = event => {
+  handlerKeyDownSpace = event => {
+    // console.log('handlerSpace')
+    const newBulletsCount = this.state.bullets - 1
+    this.setState({bullets: newBulletsCount})
+  }
+
+  // key up
+  handlerKeyUpRight = event => {
+    let direction = this.state.direction
+    direction.directionCurrent = 'right'
+    direction.dicrectionRightStatus = 'stop'
+    this.setState({direction: direction})
+  }
+
+  handlerKeyUpLeft = event => {
+    let direction = this.state.direction
+    direction.directionCurrent = 'left'
+    direction.dicrectionRightStatus = 'stop'
+    this.setState({direction: direction})
+  }
+
+  handlerKeyUpUp = event => {
+    let direction = this.state.direction
+    direction.directionCurrent = 'up'
+    direction.dicrectionRightStatus = 'stop'
+    this.setState({direction: direction})
+  }
+
+  handlerKeyUpDown = event => {
+    let direction = this.state.direction
+    direction.directionCurrent = 'down'
+    direction.dicrectionRightStatus = 'stop'
+    this.setState({direction: direction})
+  }
+
+  handlerKeyUpSpace = event => {
     // console.log('handlerSpace')
     const newBulletsCount = this.state.bullets - 1
     this.setState({bullets: newBulletsCount})
@@ -63,7 +134,42 @@ class App extends Component {
   componentDidMount() {
     document.addEventListener('keydown', event => {
       if (event.isComposing || event.code === 'Space') {
-        this.handlerSpace(event)
+        this.handlerKeyDownSpace(event)
+      }
+      if (event.isComposing || event.code === 'ArrowUp') {
+        console.log('ArrowUp keydown')
+        this.handlerKeyDownUp(event)
+      }
+      if (event.isComposing || event.code === 'ArrowDown') {
+        console.log('ArrowDown keydown')
+        this.handlerKeyDownDown(event)
+      }
+      if (event.isComposing || event.code === 'ArrowLeft') {
+        console.log('ArrowLeft keydown')
+        this.handlerKeyDownLeft(event)
+      }
+      if (event.isComposing || event.code === 'ArrowRight') {
+        console.log('ArrowRight keydown')
+        this.handlerKeyDownRight(event)
+      }
+    })
+
+    document.addEventListener('keyup', event => {
+      if (event.isComposing || event.code === 'ArrowUp') {
+        console.log('ArrowUp keyup')
+        this.handlerKeyUpUp(event)
+      }
+      if (event.isComposing || event.code === 'ArrowDown') {
+        console.log('ArrowDown keyup')
+        this.handlerKeyUpDown(event)
+      }
+      if (event.isComposing || event.code === 'ArrowLeft') {
+        console.log('ArrowLeft keyup')
+        this.handlerKeyUpLeft(event)
+      }
+      if (event.isComposing || event.code === 'ArrowRight') {
+        console.log('ArrowRight keyup')
+        this.handlerKeyUpRight(event)
       }
     })
   }
@@ -79,6 +185,7 @@ class App extends Component {
           <Map1
             newBulletCount={this.state.bullets}
             store={this.props.store}
+            direction={this.state.direction}
           />
           {/* <Header /> */}
         </Container>

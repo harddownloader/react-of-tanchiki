@@ -18,6 +18,7 @@
 		"react-redux": "^7.2.3",
 		"react-router-dom": "^5.2.0",
 		"redux": "^4.0.5",
+		"styled-components": "^5.3.0",
 		"use-data-api": "^1.0.1"
 	},
 	"devDependencies": {
@@ -89,5 +90,8 @@
 	},
 	"browsersList": ">0.25%, not dead",
 	"author": "harddownloader",
-	"license": "ISC"
+	"license": "ISC",
+	"resolutions": {
+    "styled-components": "^5"
+  }
 }

@@ -16,7 +16,8 @@ class Map1 extends Component {
 
       // our tank
       ourTank: {
-        direction: 'up',
+        // direction: 'up',
+        // direction: props.direction.directionCurrent,
         y: 12,
         x: 6
       },
@@ -53,14 +54,14 @@ class Map1 extends Component {
       let itemContent
       if( isOurTank.x === x && isOurTank.y === y) {
         // mapItemsCol.push(<div className="grid-item" key={`${y}${x}`}><OurTank /></div>)
-        itemContent = <>{itemContent}<OurTank /></>
+        itemContent = <>{itemContent}<OurTank direction={this.props.direction.directionCurrent} /></>
       }
       if (isOurBullets.length !== 0) {
         isOurBullets.forEach(bullet => {
           if(bullet.x ===x && bullet.y ===y) {
             // mapItemsCol.push(<div className="grid-item" key={`${y}${x}`}><Bullet /></div>)
             // console.log('find boolet x y')
-            itemContent = <>{itemContent}<Bullet /></>
+            itemContent = <>{itemContent}<Bullet/></>
           } 
         })
       }
@@ -127,15 +128,33 @@ class Map1 extends Component {
 
     // console.log('this.state.timer', this.state.timer)
     if (this.state.timer !== prevState.timer) {
-      console.log()
       this.generateMap()
     }
+
+    if (this.props.direction !== prevProps.direction) {
+      console.log('update direction')
+      this.generateMap()
+    }
+  }
+
+  timerRunTank() {
+    // нажимает кнопку
+    if(!this.timerIdRunTank) {
+      this.timerIdRunTank = setInterval(() => {
+
+      }, 1000)
+    }
+  }
+
+  stopTimerRunTank() {
+    // отжимаем кнопку
+    clearInterval(this.timerIdRunTank);
   }
 
   startTimer() {
     if(!this.timerId) {
       this.timerId = setInterval(() => {
-        // your function
+        // update bullets
         const bullets = this.state.ourBullets
         if(bullets.length !== 0) {
           bullets.map((item) => {
@@ -158,6 +177,7 @@ class Map1 extends Component {
               // rm current bullet
               for (let i=0; i<bullets.length; i++) {
                 if (bullets[i].id === item.id) {
+                  // rm useless bullet then it outside game zome
                   bullets.splice(i, 1)
                   this.setState({ourBullets: bullets})
                   break
@@ -172,6 +192,9 @@ class Map1 extends Component {
 
           this.setState({ourBullets: bullets})
         }
+        // update our tank
+
+        // update timer
         this.setState({timer: this.state.timer + 1})
       }, 1000);
     }

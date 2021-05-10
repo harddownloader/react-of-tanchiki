@@ -1,4 +1,23 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
+import ourTank from '../../assets/images/yourTank.png'
+import styled from 'styled-components'
+
+const OurTankImg = styled.img`
+  width: 100%;
+
+  &.direction-up {
+    transform: rotate(0deg);
+  }
+  &.direction-down {
+    transform: rotate(180deg);
+  }
+  &.direction-left {
+    transform: rotate(-90deg);
+  }
+  &.direction-right {
+    transform: rotate(90deg);
+  }
+`
 
 class OurTank extends Component {
   constructor(props) {
@@ -12,6 +31,8 @@ class OurTank extends Component {
         x: null,
         y: null
       },
+      // направление
+      direction: props.direction,
       // движение
       move: {
         move_status: true,
@@ -40,12 +61,24 @@ class OurTank extends Component {
       bullets: []
     }
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.direction !== prevProps.direction) {
+      console.log('ourtank update direction')
+      this.setState({direction: this.props.direction})
+    }
+  }
   
   render() {
     return(
       <>
         <div className="out-tank">
-          <p>OurTank</p>
+          {/* <p>OurTank</p> */}
+          <OurTankImg
+            src={ourTank}
+            alt=""
+            className={`direction-${this.state.direction}`}
+          />
         </div>
       </>
     )
