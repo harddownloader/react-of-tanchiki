@@ -69,21 +69,21 @@ class App extends Component {
   handlerKeyDownLeft = event => {
     let direction = this.state.direction
     direction.directionCurrent = 'left'
-    direction.dicrectionRightStatus = 'active'
+    direction.dicrectionLeftStatus = 'active'
     this.setState({direction: direction})
   }
 
   handlerKeyDownUp = event => {
     let direction = this.state.direction
     direction.directionCurrent = 'up'
-    direction.dicrectionRightStatus = 'active'
+    direction.dicrectionUpStatus = 'active'
     this.setState({direction: direction})
   }
 
   handlerKeyDownDown = event => {
     let direction = this.state.direction
     direction.directionCurrent = 'down'
-    direction.dicrectionRightStatus = 'active'
+    direction.dicrectionDownStatus = 'active'
     this.setState({direction: direction})
   }
 
@@ -104,21 +104,21 @@ class App extends Component {
   handlerKeyUpLeft = event => {
     let direction = this.state.direction
     direction.directionCurrent = 'left'
-    direction.dicrectionRightStatus = 'stop'
+    direction.dicrectionLeftStatus = 'stop'
     this.setState({direction: direction})
   }
 
   handlerKeyUpUp = event => {
     let direction = this.state.direction
     direction.directionCurrent = 'up'
-    direction.dicrectionRightStatus = 'stop'
+    direction.dicrectionUpStatus = 'stop'
     this.setState({direction: direction})
   }
 
   handlerKeyUpDown = event => {
     let direction = this.state.direction
     direction.directionCurrent = 'down'
-    direction.dicrectionRightStatus = 'stop'
+    direction.dicrectionDownStatus = 'stop'
     this.setState({direction: direction})
   }
 
@@ -136,39 +136,41 @@ class App extends Component {
       if (event.isComposing || event.code === 'Space') {
         this.handlerKeyDownSpace(event)
       }
+      // move
       if (event.isComposing || event.code === 'ArrowUp') {
-        console.log('ArrowUp keydown')
+        // console.log('ArrowUp keydown')
         this.handlerKeyDownUp(event)
       }
       if (event.isComposing || event.code === 'ArrowDown') {
-        console.log('ArrowDown keydown')
+        // console.log('ArrowDown keydown')
         this.handlerKeyDownDown(event)
       }
       if (event.isComposing || event.code === 'ArrowLeft') {
-        console.log('ArrowLeft keydown')
+        // console.log('ArrowLeft keydown')
         this.handlerKeyDownLeft(event)
       }
       if (event.isComposing || event.code === 'ArrowRight') {
-        console.log('ArrowRight keydown')
+        // console.log('ArrowRight keydown')
         this.handlerKeyDownRight(event)
       }
     })
 
     document.addEventListener('keyup', event => {
+      // move
       if (event.isComposing || event.code === 'ArrowUp') {
-        console.log('ArrowUp keyup')
+        // console.log('ArrowUp keyup')
         this.handlerKeyUpUp(event)
       }
       if (event.isComposing || event.code === 'ArrowDown') {
-        console.log('ArrowDown keyup')
+        // console.log('ArrowDown keyup')
         this.handlerKeyUpDown(event)
       }
       if (event.isComposing || event.code === 'ArrowLeft') {
-        console.log('ArrowLeft keyup')
+        // console.log('ArrowLeft keyup')
         this.handlerKeyUpLeft(event)
       }
       if (event.isComposing || event.code === 'ArrowRight') {
-        console.log('ArrowRight keyup')
+        // console.log('ArrowRight keyup')
         this.handlerKeyUpRight(event)
       }
     })

@@ -16,10 +16,21 @@ class Map1 extends Component {
 
       // our tank
       ourTank: {
-        // direction: 'up',
-        // direction: props.direction.directionCurrent,
         y: 12,
         x: 6
+      },
+      direction: {
+        // directionCurrent: props.direction.directionCurrent,
+        // dicrectionRightStatus: props.direction.dicrectionRightStatus,
+        // dicrectionLeftStatus: props.direction.dicrectionLeftStatus,
+        // dicrectionDownStatus: props.direction.dicrectionDownStatus,
+        // dicrectionUpStatus: props.direction.dicrectionUpStatus,
+
+        directionCurrent: null,
+        dicrectionRightStatus: null,
+        dicrectionLeftStatus: null,
+        dicrectionDownStatus: null,
+        dicrectionUpStatus: null,
       },
 
       // our bullets
@@ -85,7 +96,7 @@ class Map1 extends Component {
     
     ourBulletsTmp.push({
       id: randomId,
-      direction: this.state.ourTank.direction,
+      direction: this.props.direction.directionCurrent,
       // started X,Y
       y: this.state.ourTank.y,
       x: this.state.ourTank.x
@@ -131,24 +142,112 @@ class Map1 extends Component {
       this.generateMap()
     }
 
-    if (this.props.direction !== prevProps.direction) {
+    // console.log('this.props.direction.dicrectionRightStatus', this.props.direction.dicrectionRightStatus)
+    // console.log('prevProps.direction.dicrectionRightStatus', this.state.direction.dicrectionRightStatus)
+    // console.log('===========')
+    if (
+      this.props.direction.dicrectionRightStatus !== this.state.direction.dicrectionRightStatus ||
+      this.props.direction.dicrectionLeftStatus !== this.state.direction.dicrectionLeftStatus ||
+      this.props.direction.dicrectionUpStatus !== this.state.direction.dicrectionUpStatus ||
+      this.props.direction.dicrectionDownStatus !== this.state.direction.dicrectionDownStatus
+    ) {
       console.log('update direction')
+
+      if (
+        this.props.direction.dicrectionRightStatus !== this.state.direction.dicrectionRightStatus &&
+        this.props.direction.dicrectionRightStatus === 'stop'
+      ) {
+          this.stopTimerRunTank()
+      } else if(this.props.direction.dicrectionLeftStatus !== this.state.direction.dicrectionLeftStatus &&
+        this.props.direction.dicrectionLeftStatus === 'stop') {
+          this.stopTimerRunTank()
+      } else if (this.props.direction.dicrectionUpStatus !== this.state.direction.dicrectionUpStatus && 
+        this.props.direction.dicrectionUpStatus === 'stop') {
+          console.log('- dicrectionUpStatus stop')
+          this.stopTimerRunTank()
+      } else if (this.props.direction.dicrectionDownStatus !== this.state.direction.dicrectionDownStatus &&
+        this.props.direction.dicrectionDownStatus === 'stop') {
+          this.stopTimerRunTank()
+      }
+
+      // this.props.direction.dicrectionRightStatus !== this.state.direction.dicrectionRightStatus ||
+      // this.props.direction.dicrectionLeftStatus !== this.state.direction.dicrectionLeftStatus ||
+      // this.props.direction.dicrectionUpStatus !== this.state.direction.dicrectionUpStatus ||
+      // this.props.direction.dicrectionDownStatus !== this.state.direction.dicrectionDownStatus
+
+      const newDirection = Object.assign({}, this.props.direction)
+      this.setState({direction: newDirection}, () => {
+        // console.log('after update direction')
+        this.timerRunTank()
+      })
       this.generateMap()
     }
+  }
+
+  checkOurTankOnOutSideMap(NewTankXY) {
+    let needTankXY = NewTankXY
+    if (NewTankXY.x < 0) {
+      needTankXY.x = 0
+    }
+    if (NewTankXY.y < 0) {
+      needTankXY.y = 0
+    }
+    if (NewTankXY.x > this.state.heightMap - 1) {
+      needTankXY.x = this.state.heightMap - 1
+    }
+    if (NewTankXY.y > this.state.wightMap -1) {
+      needTankXY.y = this.state.wightMap - 1
+    }
+    // console.log('needTankXY', needTankXY)
+    return needTankXY
   }
 
   timerRunTank() {
     // нажимает кнопку
     if(!this.timerIdRunTank) {
+      let counterInterval = 0
       this.timerIdRunTank = setInterval(() => {
+        const ourTank = this.state.ourTank
+        const direction = this.state.direction
 
-      }, 1000)
+        let needNewOurTankXY = this.checkOurTankOnOutSideMap(ourTank)
+        if (direction.dicrectionRightStatus === 'active') {
+          needNewOurTankXY = this.checkOurTankOnOutSideMap({
+            y: ourTank.y,
+            x: (ourTank.x + 1)
+          })
+          
+        } else if (direction.dicrectionLeftStatus === 'active') {
+          needNewOurTankXY = this.checkOurTankOnOutSideMap({
+            y: ourTank.y,
+            x: (ourTank.x - 1)
+          })
+        } else if (direction.dicrectionUpStatus === 'active') {
+          needNewOurTankXY = this.checkOurTankOnOutSideMap({
+            y: (ourTank.y - 1),
+            x: ourTank.x
+          })
+        } else if (direction.dicrectionDownStatus === 'active') {
+          needNewOurTankXY = this.checkOurTankOnOutSideMap({
+            y: (ourTank.y + 1),
+            x: ourTank.x
+          })
+        } else {
+          // this.stopTimerRunTank()
+        }
+
+        this.setState({ourTank: needNewOurTankXY})
+
+        console.log('setInterval is running', counterInterval++)
+      }, 500)
     }
   }
 
   stopTimerRunTank() {
+    console.log('stopTimerRunTank')
     // отжимаем кнопку
     clearInterval(this.timerIdRunTank);
+    delete this.timerIdRunTank
   }
 
   startTimer() {
