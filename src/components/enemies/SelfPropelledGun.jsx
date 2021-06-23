@@ -1,18 +1,20 @@
 import React, {Component} from 'react';
+import {EnemyLogic} from './EnemyLogic';
 
 /**
  * самоходка
  */
-class SelfPropelledGun extends Component {
+export class SelfPropelledGun extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      enemyId: props.enemy.id,
       radius_of_destruction: 30,
       cannon_turning_radius: 0,
       armor_level: 1,
       coordinates: {
-        x: null,
-        y: null
+        x: props.enemy.x,
+        y: props.enemy.y
       },
       move: {
         move_status: true,
@@ -29,7 +31,17 @@ class SelfPropelledGun extends Component {
         }
       ]
     }
+
+    this.EnemyLogic = new EnemyLogic({
+      enemyId: this.state.enemyId,
+      enemyX: props.enemy.x,
+      enemyY: props.enemy.y,
+      ourTankX: props.ourTank.x,
+      ourTankY: props.ourTank.y,
+      updateEnemyXY: props.updateEnemyXY
+    })
   }
+
   
   render() {
     return(
@@ -41,5 +53,3 @@ class SelfPropelledGun extends Component {
     )
   }
 }
-
-export default SelfPropelledGun

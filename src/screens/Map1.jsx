@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import OurTank from '@/components/ourTank/OurTank'
 import Bullet from '@/components/Bullet'
 import makeId from '@/utils/generateRandomString'
+import {SelfPropelledGun} from '@/components/enemies/SelfPropelledGun'
 
 class Map1 extends Component {
   constructor(props) {
@@ -10,15 +11,17 @@ class Map1 extends Component {
     // console.log('props store', this.props.store)
     
     this.state = {
+      // map
       mapItems: [],
       heightMap: 13,
       wightMap: 13,
 
-      // our tank
+      // our tank x,y
       ourTank: {
         y: 12,
         x: 6
       },
+      // our tank direction
       direction: {
         // directionCurrent: props.direction.directionCurrent,
         // dicrectionRightStatus: props.direction.dicrectionRightStatus,
@@ -36,8 +39,11 @@ class Map1 extends Component {
       // our bullets
       ourBullets: [],
 
-      // timer
+      // game timer
       timer: 0,
+
+      // enemies list
+      enemies: [],
     }
   }
 
@@ -59,27 +65,86 @@ class Map1 extends Component {
   genereteColumns(y) {
     // console.log('genereteColumns')
     const mapItemsCol = []
-    for(let x=0; x<this.state.wightMap; x++) {
+    for(let x=0; x < this.state.wightMap; x++) {
       let isOurTank = this.state.ourTank
       let isOurBullets = this.state.ourBullets
-      let itemContent
-      if( isOurTank.x === x && isOurTank.y === y) {
-        // mapItemsCol.push(<div className="grid-item" key={`${y}${x}`}><OurTank /></div>)
-        itemContent = <>{itemContent}<OurTank direction={this.props.direction.directionCurrent} /></>
+      let enemies = this.state.enemies
+      let itemContent = 0
+
+      // if( isOurTank.x === x && isOurTank.y === y) {
+      //   // mapItemsCol.push(<div className="grid-item" key={`${y}${x}`}><OurTank /></div>)
+      //   itemContent = <>{itemContent}<OurTank direction={this.props.direction.directionCurrent} /></>
+      // }
+      // if (isOurBullets.length !== 0) {
+      //   isOurBullets.forEach(bullet => {
+      //     if(bullet.x ===x && bullet.y ===y) {
+      //       // mapItemsCol.push(<div className="grid-item" key={`${y}${x}`}><Bullet /></div>)
+      //       // console.log('find boolet x y')
+      //       itemContent = <>{itemContent}<Bullet/></>
+      //     }
+      //   })
+      // }
+      // console.log('genereteColumns')
+      
+      let currentBlock = []
+        
+        // out tank
+        if (isOurTank.x === x && isOurTank.y === y) {
+          currentBlock.push(<OurTank direction={this.props.direction.directionCurrent} />)
+        }
+        // bullets
+        for(let q=0; q<isOurBullets.length; q++) {
+          if(
+            isOurBullets[q].x === x &&
+            isOurBullets[q].y === y
+          ) {
+            currentBlock.push(<Bullet/>)
+          }
+        }
+        // enemies
+        for (let w=0; w<enemies.length; w++) {
+          // console.log(`enemies ${w} x`, {
+          //   x: x,
+          //   enemies_w: enemies[w],
+          //   // enemies_w_x: enemies[w].x
+          // })
+          if(enemies.length > 1) {
+            // debugger
+          }
+          if (
+            enemies[w].x === x &&
+            enemies[w].y === y
+            ) {
+              // console.log('SelfPropelledGun', {
+              //   id: 'SelfPropelledGun' + w,
+              //   x: enemies[w].x,
+              //   y: enemies[w].y
+              // })
+              // debugger
+              currentBlock.push(
+                <SelfPropelledGun
+                  ourTank={this.state.ourTank}
+                  enemy={{
+                    // id: 'SelfPropelledGun' + w,
+                    id: enemies[w].id,
+                    x: enemies[w].x,
+                    y: enemies[w].y
+                  }}
+                  updateEnemyXY={this.updateEnemyXY.bind(this)}
+                />
+              )
+          }
+        }
+
+      for(let i=0; i<currentBlock.length; i++) {
+        itemContent = <>{itemContent} {currentBlock[i]} </>
       }
-      if (isOurBullets.length !== 0) {
-        isOurBullets.forEach(bullet => {
-          if(bullet.x ===x && bullet.y ===y) {
-            // mapItemsCol.push(<div className="grid-item" key={`${y}${x}`}><Bullet /></div>)
-            // console.log('find boolet x y')
-            itemContent = <>{itemContent}<Bullet/></>
-          } 
-        })
-      }
+
       // console.log('itemContent', itemContent)
       
       if (!itemContent) {
         // mapItemsCol.push(<div className="grid-item" key={`${y}${x}`}>{y}-{x}</div>)
+        // console.log('!itemContent', itemContent)
         itemContent = <>{y}-{x}</>
       }
 
@@ -87,6 +152,28 @@ class Map1 extends Component {
     }
 
     return mapItemsCol
+  }
+
+  // чтобы враг двигался, --прокидывается бумерангом до уровня логики движения врага
+  updateEnemyXY({x, y, enemyId}) {
+    console.log(this)
+    console.log(this.state)
+    console.log('updateEnemyXY xy', {x,y})
+    console.log('updateEnemyXY enemyId', enemyId)
+    let enemies = this.state.enemies
+    // тут его name всесто индификатора порядкового номера
+    const indexEnemy = enemies.findIndex(item => item.id === enemyId)
+    console.log('indexEnemy', indexEnemy)
+    // debugger
+    enemies[indexEnemy] = {
+      ...enemies[indexEnemy],
+      x: x,
+      y: y
+    }
+    console.log('updateEnemyXY enemies', enemies)
+    this.setState({enemies: enemies}, () => {
+      return enemies
+    })
   }
 
   // BULLETS
@@ -151,7 +238,7 @@ class Map1 extends Component {
       this.props.direction.dicrectionUpStatus !== this.state.direction.dicrectionUpStatus ||
       this.props.direction.dicrectionDownStatus !== this.state.direction.dicrectionDownStatus
     ) {
-      console.log('update direction')
+      // console.log('update direction')
 
       if (
         this.props.direction.dicrectionRightStatus !== this.state.direction.dicrectionRightStatus &&
@@ -163,7 +250,7 @@ class Map1 extends Component {
           this.stopTimerRunTank()
       } else if (this.props.direction.dicrectionUpStatus !== this.state.direction.dicrectionUpStatus && 
         this.props.direction.dicrectionUpStatus === 'stop') {
-          console.log('- dicrectionUpStatus stop')
+          // console.log('- dicrectionUpStatus stop')
           this.stopTimerRunTank()
       } else if (this.props.direction.dicrectionDownStatus !== this.state.direction.dicrectionDownStatus &&
         this.props.direction.dicrectionDownStatus === 'stop') {
@@ -238,13 +325,13 @@ class Map1 extends Component {
 
         this.setState({ourTank: needNewOurTankXY})
 
-        console.log('setInterval is running', counterInterval++)
+        // console.log('setInterval is running', counterInterval++)
       }, 500)
     }
   }
 
   stopTimerRunTank() {
-    console.log('stopTimerRunTank')
+    // console.log('stopTimerRunTank')
     // отжимаем кнопку
     clearInterval(this.timerIdRunTank);
     delete this.timerIdRunTank
@@ -284,19 +371,35 @@ class Map1 extends Component {
               }
             }
 
-            console.log('item', item)
+            // console.log('item', item)
 
             return item
           })
 
           this.setState({ourBullets: bullets})
         }
-        // update our tank
+        // generete enemy
+        if (this.state.timer === 3) {
+          const enemies = this.state.enemies
+          enemies.push({
+            name: 'SelfPropelledGun',
+            id: 'SelfPropelledGun' + enemies.length,
+            x: this.getRandomInt(this.state.wightMap),
+            y: 0,
+          })
+          // console.log('generete enemy', enemies)
+          // debugger
+          this.setState({enemies: enemies})
+        }
 
         // update timer
         this.setState({timer: this.state.timer + 1})
       }, 1000);
     }
+  }
+
+  getRandomInt(max) {
+    return Math.floor(Math.random() * max);
   }
   
   stopTimer() {
