@@ -21,6 +21,8 @@ export class EnemyLogic extends Component{
       enemyY: props.enemyY,
       ourTankX: props.ourTankX,
       ourTankY: props.ourTankY,
+      radius_of_destruction: props.radius_of_destruction,
+      numberOfEnemyShots: 0
       // updateEnemyXY
     } 
     this.startMove()
@@ -52,34 +54,121 @@ export class EnemyLogic extends Component{
         y = ourTankY,
         currentX = this.state.enemyX,
         currentY = this.state.enemyY
-    // if (currentX > x) {
-    //   currentX = currentX - 1
-    // } else if (currentX < x) {
-    //   currentX = currentX + 1
-    // } else if(currentY > y) {
-    //   currentY = currentY + 1
-    // } else if (currentY < y) {
-    //   currentY = currentY - 1
-    // } else {
-    //   console.error('EnemyLogic -> moveTo x y')
-    // }
-
-    // this.x = currentX
-    // this.y = (currentY + 1)
-    // this.setState({
-    //   x: currentX,
-    //   y: (currentY + 1)
-    // }, () => {
 
     // сделать проверку, как танку врага быстрее всего добраться до общей диалогнали с нашим танком(чтобы атаковать), по x или по y?
+    // разница по y в любую сторону
+    let diffY
+    let needMoveToDown = false
+    if(currentY >= y) {
+      diffY = currentY - y
+      
+    } else {
+      diffY = y - currentY
+      needMoveToDown = true
+    }
+    
+    // разница по x в любую сторону
+    let diffX
+    
+    let needMoveToLeft = false
+    if (currentX >= x) {
+      diffX = currentX - x
+      needMoveToLeft = true
+    } else {
+      diffX = x - currentX
+      
+    }
+
+    // return {
+    //   x: this.state.enemyX,
+    //   y: this.state.enemyY
+    // }
+    if (x === currentX) {
+      if (diffY < this.state.radius_of_destruction) {
+        console.log('fire! x', {
+          id: this.state.enemyId + this.state.numberOfEnemyShots,
+          enemyId: this.state.enemyId,
+          direction: needMoveToDown ? 'down' : 'up'
+        })
+
+        this.props.addEnemyBullet({
+          id: this.state.enemyId + this.state.numberOfEnemyShots,
+          enemyId: this.state.enemyId,
+          direction: needMoveToDown ? 'down' : 'up',
+          x: this.state.enemyX,
+          y: this.state.enemyY
+        })
+        // debugger
+        return {
+          x: this.state.enemyX,
+          y: this.state.enemyY
+        }
+      }
+      
+    } else if (y === currentY) {
+      if (diffX < this.state.radius_of_destruction) {
+        console.log('fire! y', {
+          id: this.state.enemyId + this.state.numberOfEnemyShots,
+          enemyId: this.state.enemyId,
+          direction: needMoveToLeft ? 'left': 'right'
+        })
+
+        this.props.addEnemyBullet({
+          id: this.state.enemyId + this.state.numberOfEnemyShots,
+          enemyId: this.state.enemyId,
+          direction: needMoveToLeft ? 'left': 'right'
+        })
+        
+        // debugger
+        return {
+          x: this.state.enemyX,
+          y: this.state.enemyY
+        }
+      }
+      
+    }
+
+    // смотрим в какую сторону ближе двигаться
+    if(diffY > diffX && diffX !== 0) {
+      // если x нам ближе то двигаем ся по нему
+      console.log('diffY > diffX needMoveToLeft', needMoveToLeft)
+      if (needMoveToLeft) {
+        this.state.enemyX = (currentX - 1)
+      } else {
+        this.state.enemyX = (currentX + 1)
+      }
+      // debugger
+    } else if(diffY < diffX && diffY !== 0) {
+      // если y нам ближе , то двигаемся по нему
+      console.log('diffY < diffX needMoveToDown', needMoveToDown)
+      if (needMoveToDown) {
+        this.state.enemyY = (currentY + 1)
+      } else {
+        this.state.enemyY = (currentY - 1)
+      }
+      // debugger
+    } else {
+      console.log('diffY = diffX, одинаковые x и y')
+      
+      // diffX === diffX
+      // diffX && diffX !== 0
+      this.state.enemyY = (currentY + 1)
+      // debugger
+    }
+    // debugger
     //   сравниваем x и y танка врага и нашего
     //   и выбираем то направление, по которому танку соперника ближе всего уровниться с нашим танком
     //     делаем проверку, сравнились ли два танка по диагонали
-    //       если сравнились - то даем команду на атаку
+    //       проверяем хватает ли нам нашего радиуса поражоения для атаки, если хватает
+    //          атакуем
+    //       иначе
+    //        пытаемся подойти ближе
+    //          как подошли на нужный радиус
+    //            атакуем
       
     // })
-    this.state.enemyX = currentX
-    this.state.enemyY = (currentY + 1)
+    // this.state.enemyX = currentX
+    // this.state.enemyY = (currentY + 1)
     console.log('currentY', currentY)
     return {
       x: this.state.enemyX,

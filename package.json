@@ -8,6 +8,7 @@
 		"@material-ui/icons": "^4.11.2",
 		"axios": "^0.21.1",
 		"clsx": "^1.1.1",
+		"core-js": "^3.15.2",
 		"node-sass": "^5.0.0",
 		"normalize.css": "^8.0.1",
 		"postcss-import": "^14.0.0",
@@ -25,7 +26,6 @@
 		"@babel/core": "^7.13.8",
 		"@babel/plugin-proposal-class-properties": "^7.13.0",
 		"@babel/plugin-transform-runtime": "^7.13.9",
-		"@babel/polyfill": "^7.12.1",
 		"@babel/preset-env": "^7.13.9",
 		"@babel/preset-react": "^7.12.13",
 		"@svgr/webpack": "^5.5.0",
@@ -45,7 +45,6 @@
 		"eslint-plugin-prettier": "^3.3.1",
 		"eslint-plugin-react": "^7.22.0",
 		"eslint-plugin-react-hooks": "^4.2.0",
-		"eslint-plugin-unicorn": "^28.0.2",
 		"eslint-webpack-plugin": "^2.5.2",
 		"fork-ts-checker-webpack-plugin": "^6.1.1",
 		"html-webpack-plugin": "^5.2.0",
@@ -71,7 +70,6 @@
 		"terser-webpack-plugin": "^5.1.1",
 		"ts-node": "^9.1.1",
 		"typescript": "^4.2.2",
-		"unicorn": "^0.0.1",
 		"webpack": "^5.24.3",
 		"webpack-cli": "^4.5.0",
 		"webpack-dev-server": "^3.11.2",
@@ -92,6 +90,6 @@
 	"author": "harddownloader",
 	"license": "ISC",
 	"resolutions": {
-    "styled-components": "^5"
-  }
+		"styled-components": "^5"
+	}
 }

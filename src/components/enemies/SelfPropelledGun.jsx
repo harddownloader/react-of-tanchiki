@@ -9,7 +9,8 @@ export class SelfPropelledGun extends Component {
     super(props)
     this.state = {
       enemyId: props.enemy.id,
-      radius_of_destruction: 30,
+      // radius_of_destruction: 30, // было задуманно
+      radius_of_destruction: 5, // поставил для теста
       cannon_turning_radius: 0,
       armor_level: 1,
       coordinates: {
@@ -38,7 +39,9 @@ export class SelfPropelledGun extends Component {
       enemyY: props.enemy.y,
       ourTankX: props.ourTank.x,
       ourTankY: props.ourTank.y,
-      updateEnemyXY: props.updateEnemyXY
+      updateEnemyXY: props.updateEnemyXY,
+      radius_of_destruction: this.state.radius_of_destruction,
+      addEnemyBullet: props.addEnemyBullet,
     })
   }
 

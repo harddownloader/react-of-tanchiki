@@ -3,10 +3,9 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	plugins: ['react', 'prettier', 'unicorn', 'react-hooks'],
+	plugins: ['react', 'prettier', 'react-hooks'],
 	extends: [
 		'airbnb-base',
-		'plugin:unicorn/recommended',
 		'plugin:react/recommended',
 		'plugin:react-hooks/recommended',
 		'plugin:prettier/recommended',
@@ -22,16 +21,6 @@ module.exports = {
 
 	rules: {
 		'import/no-unresolved': 'off',
-		'unicorn/prevent-abbreviations': 1,
-		'unicorn/filename-case': [
-			'error',
-			{
-				cases: {
-					camelCase: true,
-					pascalCase: true,
-				},
-			},
-		],
 		'import/extensions': [
 			'error',
 			'never',

@@ -1,4 +1,6 @@
-export function playlist(state = [], action) {  
+import { isConstructorDeclaration } from "typescript"
+
+export function playlist(state = [], action) {
   switch (action.type) {
     case 'INCREMENT':
       state.push({name:'Audi'})
@@ -19,6 +21,16 @@ export function playlist(state = [], action) {
       // default если не сработал ни один из случаев
     default:
       state = [{name: 'bmw'}]
+      return state
+  }
+}
+
+export function fireEnemy(state = [], action) {
+  switch(action.type) {
+    case 'fire':
+      console.log('fire', action.data)
+      return state
+    default:
       return state
   }
 }

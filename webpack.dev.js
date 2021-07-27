@@ -13,6 +13,7 @@ module.exports = merge(common, {
 		historyApiFallback: true,
 		open: true,
 		hot: true,
+		port: 9000,
 	},
 	plugins: [new webpack.HotModuleReplacementPlugin()],
 })
