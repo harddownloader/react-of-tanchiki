@@ -1,13 +1,15 @@
 // 13x13
 
-.map{}
-.grids-container{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  background-color: red;
+.map{
+  transition: all 1s linear;
 }
-.grid-item{
-  text-align: center;
+// .grids-container{
+//   display: grid;
+//   grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+//   grid-template-rows: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+//   background-color: red;
+// }
+// .grid-item{
+//   text-align: center;
 
-}
+// }
