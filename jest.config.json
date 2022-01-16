@@ -1,6 +1,6 @@
 {
 	"bail": 1,
-	"setupFilesAfterEnv": ["./enzyme.config.js"],
+	"setupFilesAfterEnv": [],
 	"verbose": true,
 	"modulePaths": ["src"],
 	"moduleDirectories": ["node_modules"],
