@@ -47,13 +47,13 @@ export class SelfPropelledGun extends Component {
 		})
 	}
 
-	async initializationEnemy() {v
-    console.log('initializationEnemy')
-    const enemyInitData = await initEnemy()
-    // this.setState({initEnemy: enemyInitData})
-    console.log('initializationEnemy', enemyInitData)
-    return enemyInitData
-  }
+	async initializationEnemy() {
+		console.log('initializationEnemy')
+		const enemyInitData = await initEnemy()
+		// this.setState({initEnemy: enemyInitData})
+		console.log('initializationEnemy', enemyInitData)
+		return enemyInitData
+	}
 
   componentDidMount() {
     console.log('componentDidMount')
