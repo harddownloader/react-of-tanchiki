@@ -1,7 +1,10 @@
 
-.out-tank {
+.our-tank {
   width: 30px;
   height: 30px;
   // background-color: brown;
   transition: all 1s linear;
+
+  position: relative;
+  left: 15;
 }

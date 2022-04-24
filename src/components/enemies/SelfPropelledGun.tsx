@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { EnemyLogic } from './EnemyLogic'
-import { initEnemy } from "@/core/api/enemy";
+import { initEnemy } from "@/core/api/enemy"
 
 /**
  * самоходка

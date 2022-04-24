@@ -27,7 +27,11 @@ class Bullet extends Component {
   componentDidMount() {
     this.mount = true;
     this.animateBullet();
-    console.log('bulletEl', this.bulletEl)
+    console.log('bulletEl', this.bulletEl);
+    // определить направление
+    // получить положение пульки
+    // получить ближ. препядствие
+    // сравнить с
   }
 
   componentWillUnmount(): void {
@@ -60,6 +64,11 @@ class Bullet extends Component {
 
   render() {
     const { left } = this.state;
+    // this.bulletEl?.current && console.log('bulletEl', {
+    //   bulletEl: this.bulletEl,
+    //   offsetLeft: this.bulletEl.current.offsetLeft,
+    //   offsetTop: this.bulletEl.current.offsetTop
+    // })
     
     return (
       <>

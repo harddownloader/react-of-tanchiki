@@ -49,6 +49,8 @@ class OurTank extends Component {
 
       playerData: {},
     };
+
+    this.ourTankRef = React.createRef();
   }
 
   initializationPlayer() {
@@ -72,9 +74,16 @@ class OurTank extends Component {
     const { coordinates } = this.state;
     // console.log('initPlayer', this.state.initPlayer.then(newData => newData))
 
+    // console.log('this.ourTankRef', {
+    //   ourTankRef: this.ourTankRef,
+    //   // offsetLeft: this.ourTankRef.current.offsetLeft,
+    //   // offsetTop: this.ourTankRef.current.offsetTop
+    // });
+    
     const OurTankImg = styled.img`
       width: 100%;
-      transform: translate3d(${coordinates.x}, 0px, 0px);
+      // transform: translate3d(${coordinates.x}, 0px, 0px);
+    
       &.direction-up {
         transform: rotate(0deg);
       }
@@ -91,11 +100,11 @@ class OurTank extends Component {
 
     return (
       <>
-        <div className="out-tank">
+        <div className="our-tank" ref={this.ourTankRef}>
           {/* <p>OurTank</p> */}
           <OurTankImg
             src={ourTank}
-            alt=""
+            alt="tank"
             className={`direction-${this.state.direction}`}
           />
         </div>

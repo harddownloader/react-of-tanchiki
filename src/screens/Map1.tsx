@@ -9,6 +9,7 @@ import GenerateRandomWrap from '@/core/generators/GenerateRandom'
 import GeneratorEnemyWrap from '@/core/generators/GeneratorEnemy'
 import OurTank from "@/components/ourTank/OurTank";
 import Bullet from "@/components/Bullets/ourTank";
+import { initMap } from '@/core/api/map'
 // import { v4 as uuidv4 } from 'uuid';
 
 
@@ -60,23 +61,12 @@ class Map1 extends Component<myProps, {}> {
 		// this.GenerateMap = new GenerateMapWrap({ _this: this })
 		this.GenerateRandom = new GenerateRandomWrap({ _this: this })
 		this.GeneratorEnemy = new GeneratorEnemyWrap({ _this: this })
+		this.initializationMap = this.initializationMap.bind(this)
+		this.createMap = this.createMap.bind(this)
 	}
 
 	componentDidMount() {
-		// this.GenerateMap.generateMap()
-
-		// console.log(
-		// 	'map1 store dispatch',
-		// 	this.props.store.dispatch({
-		// 		type: 'INCREMENT',
-		// 		data: {
-		// 			ourTank: {
-		// 				y: this.state.ourTank.y,
-		// 				x: this.state.ourTank.x,
-		// 			},
-		// 		},
-		// 	}),
-		// )
+		this.initializationMap()
 
 		// start timer
 		this.TimersInstance.startTimer()
@@ -149,6 +139,24 @@ class Map1 extends Component<myProps, {}> {
 		}
 	}
 
+	async initializationMap() {
+		const mapInitData = await initMap()
+		await this.createMap(mapInitData.map)
+		return mapInitData
+	}
+
+	createMap(data) {
+		const map = data.encodedMap
+		const mapItems = map.split(';')
+
+		mapItems.forEach((item) => {
+			const [x, y] = item.split('/')
+			console.log({
+				x, y
+			})
+		})
+	}
+
 	checkOurTankOnOutSideMap(NewTankXY) {
 		const needTankXY = NewTankXY
 		if (NewTankXY.x < 0) {
@@ -168,16 +176,37 @@ class Map1 extends Component<myProps, {}> {
 	}
 
 	render() {
+		let gridItems = []
+		let x = 0
+		let y = 0
+
+		for (let i=0; i<169; i++) {
+			if (x >= 13) {
+				y = y + 1
+				x = 0
+			}
+
+			gridItems.push(
+				<div
+					className={`grid-item`}
+					id={`x-${x} y-${y}`}
+					key={i}
+				></div>
+			)
+			x++
+		}
+
 		return (
 			<>
 				<div className='map map1'>
 					<div className='grids-container'>
-						{this.state.ourBullets.map((bullet) => {
+						{gridItems.map(el => el)}
+					</div>
+					{this.state.ourBullets.map((bullet) => {
 							return <Bullet key={bullet.id} />
 						})}
 						<OurTank direction={'left'}/>
 						{this.state.mapItems}
-					</div>
 				</div>
 			</>
 		)
